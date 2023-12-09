@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.han.usermanager.mapper.UserMapper">
+
+    <select id="findUserList" resultType="com.han.usermanager.pojo.User">
+        select
+            *
+        from user
+        <where>
+            1=1
+            <if test="queryParam != null">
+                <if test="queryParam.username != null and queryParam.username != ''">
+                    and username = #{queryParam.username}
+                </if>
+                <if test="queryParam.nickname != null and queryParam.nickname != ''">
+                    and nickname like CONCAT(#{queryParam.nickname},'%')
+                </if>
+                <if test="queryParam.phone != null and queryParam.phone != ''">
+                    and phone = #{queryParam.phone}
+                </if>
+                <if test="queryParam.sex != null and queryParam.sex != ''">
+                    and sex = #{queryParam.sex}
+                </if>
+                <if test="queryParam.time != null and queryParam.time != ''">
+                    and DATE_FORMAT(gmt_create,'%Y-%m-%d') = #{queryParam.time}
+                </if>
+            </if>
+        </where>
+    </select>
+
+</mapper>
